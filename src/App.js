@@ -1,23 +1,38 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import DrinkCard from './DrinkCard';
+
+const drinksList = [
+  { id: 0,
+  name: "Margarita",
+  fruit: "lime",
+  alcohol:"tequila"
+},
+{ id: 1,
+  name: "Paloma",
+  fruit: "lime" + " " + "grapefruit",
+  alcohol:"tequila"
+},
+{ id: 2,
+  name: "Vodka Cranberry",
+  fruit: "cranberry",
+  alcohol:"vodka"
+}
+]
 
 function App() {
+  const [categoryFilter, setCategoryFilter] = useState('All')
+ 
+  let filteredDrinks
+  if(categoryFilter === 'All') {
+    filteredDrinks = drinksList
+  }
+  else{
+    filteredDrinks = drinksList.filter(drink => drink.category === categoryFilter)
+  }
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <h1>My Drinks</h1>
+      { filteredDrinks.map( d => <DrinkCard drink={d} /> ) }
     </div>
   );
 }
